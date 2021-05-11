@@ -9,6 +9,7 @@ docker build -t [CONTAINER_REPOSITORY]:[TAG]
     --build-arg ELS_USER="${ELS_USER}" \
     --build-arg ELS_PASSWORD="${ELS_PASSWORD}" \
     --build-arg ELS_INDEX="${ELS_INDEX}" \
+    --build-arg SUPPORT=${SUPPORT}
     .
 
 docker run -d --name [CONTAINER_NAME] --restart=always -p 8001:8001 [CONTAINER_REPOSITORY]:[TAG]
