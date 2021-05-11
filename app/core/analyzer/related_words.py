@@ -14,7 +14,8 @@ def word_network(df: pd.DataFrame) -> Dict:
     :param df:
     :return:
     """
-    results = (list(apriori(df['words'], min_support=SUPPORT, max_length=2)))
+    support = float(SUPPORT)
+    results = (list(apriori(df['words'], min_support=support, max_length=2)))
 
     columns = ['nodes', 'support']
     ndf = pd.DataFrame(columns=columns)
