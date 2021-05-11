@@ -1,9 +1,10 @@
-from operator import itemgetter
+import math
 from typing import Dict
 import pandas as pd
 import networkx as nx
 from apyori import apriori
 from networkx.readwrite import json_graph
+from app.env import SUPPORT
 
 
 def word_network(df: pd.DataFrame) -> Dict:
@@ -13,7 +14,7 @@ def word_network(df: pd.DataFrame) -> Dict:
     :param df:
     :return:
     """
-    results = (list(apriori(df['words'], min_support=0.05, max_length=2)))
+    results = (list(apriori(df['words'], min_support=SUPPORT, max_length=2)))
 
     columns = ['nodes', 'support']
     ndf = pd.DataFrame(columns=columns)
@@ -41,13 +42,13 @@ def _network_data(df: pd.DataFrame) -> Dict:
     G.add_edges_from(ar)
 
     pr = nx.pagerank(G)
-    pr = dict(sorted(pr.items(), key=itemgetter(1), reverse=True))
-
+    node_size = {k: math.log(1000 * v) * 8 for k, v in pr.items()}
     node_link_data = json_graph.node_link_data(G)
 
     node_data = node_link_data['nodes']
     for node in node_data:
         node['name'] = node['id']
+        node['_size'] = get_node_size(node_size.get(node['id'], 10))
 
     link_data = node_link_data['links']
     for link in link_data:
@@ -63,3 +64,12 @@ def _network_data(df: pd.DataFrame) -> Dict:
     }
 
     return resp_node_data
+
+
+def get_node_size(ns: float) -> float:
+    if ns < 10:
+        return 10.0
+    elif ns > 50:
+        return 50.0
+    else:
+        return ns
