@@ -9,5 +9,6 @@ docker build \
     --build-arg ELS_USER="${ELS_USER}" \
     --build-arg ELS_PASSWORD="${ELS_PASSWORD}" \
     --build-arg ELS_TEXT_INDEX="${ELS_TEXT_INDEX}" \
+    --build-arg SUPPORT="${SUPPORT}" \
     -f $DOCKERFILE_PATH \
     -t $IMAGE_NAME .
