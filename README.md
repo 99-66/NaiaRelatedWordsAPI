@@ -8,7 +8,7 @@ docker build -t [CONTAINER_REPOSITORY]:[TAG]
     --build-arg ELS_HOST="${ELS_HOST}" \
     --build-arg ELS_USER="${ELS_USER}" \
     --build-arg ELS_PASSWORD="${ELS_PASSWORD}" \
-    --build-arg ELS_INDEX="${ELS_INDEX}" \
+    --build-arg ELS_TEXT_INDEX="${ELS_TEXT_INDEX}" \
     --build-arg SUPPORT=${SUPPORT}
     .
 
